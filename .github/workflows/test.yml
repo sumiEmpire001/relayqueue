@@ -1,5 +1,8 @@
 name: Tests
-on: [push, pull_request]
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -14,3 +17,10 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: python -m unittest discover -s tests -v
+
+      - name: Run sample scenario
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          python -m relayqueue --db demo.db enqueue sum '{"numbers":[10,20,30]}' --key manual-demo
+          python -m relayqueue --db demo.db worker --once
+          python -m relayqueue --db demo.db list --state done
