@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lord-sumi-relayqueue"
+version = "0.1.0"
+description = "SQLite job queue with fenced worker leases and an inspection API"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+relayqueue = "relayqueue.__main__:main"
+
+[tool.setuptools.packages.find]
+include = ["relayqueue*"]
